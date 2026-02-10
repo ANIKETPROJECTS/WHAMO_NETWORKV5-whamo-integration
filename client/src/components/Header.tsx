@@ -23,7 +23,8 @@ import {
   Circle,
   GitCommitHorizontal,
   ArrowRightCircle,
-  ListVideo
+  ListVideo,
+  Layout
 } from 'lucide-react';
 import {
   Menubar,
@@ -57,6 +58,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from '@/hooks/use-toast';
+import { generateSystemDiagramSVG } from '@/lib/diagram-generator';
 import folderIcon from "@assets/open-folder_1770356038145.png";
 
 interface HeaderProps {
@@ -90,6 +92,7 @@ export function Header({ onExport, onSave, onLoad }: HeaderProps) {
   const [requestType, setRequestType] = useState<'HISTORY' | 'PLOT' | 'SPREADSHEET'>('HISTORY');
   const [isRenameOpen, setIsRenameOpen] = useState(false);
   const [tempProjectName, setTempProjectName] = useState(projectName);
+  const [diagramOpen, setDiagramOpen] = useState(false);
 
   useEffect(() => {
     setLocalParams(computationalParams);
@@ -193,6 +196,10 @@ export function Header({ onExport, onSave, onLoad }: HeaderProps) {
               <MenubarContent>
                 <MenubarItem>Full Screen</MenubarItem>
                 <MenubarItem>Show Grid</MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem onClick={() => setDiagramOpen(true)} className="gap-2">
+                  <Layout className="w-4 h-4" /> System Diagram
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
 
@@ -374,6 +381,30 @@ export function Header({ onExport, onSave, onLoad }: HeaderProps) {
 
 
         <div className="ml-auto flex items-center gap-2 pr-4">
+          <Dialog open={diagramOpen} onOpenChange={setDiagramOpen}>
+            <DialogTrigger asChild>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="h-9 px-4 rounded-full font-medium shadow-sm transition-all"
+              >
+                <Layout className="w-4 h-4 mr-2" />
+                System Diagram
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-5xl h-[80vh] flex flex-col">
+              <DialogHeader>
+                <DialogTitle>WHAMO System Diagram</DialogTitle>
+              </DialogHeader>
+              <div className="flex-1 bg-slate-50 border rounded-lg overflow-auto p-4 flex items-center justify-center">
+                <div 
+                  className="w-full h-full"
+                  dangerouslySetInnerHTML={{ __html: generateSystemDiagramSVG(nodes, edges) }} 
+                />
+              </div>
+            </DialogContent>
+          </Dialog>
+
           <Button 
             variant="default" 
             size="sm" 
