@@ -41,8 +41,8 @@ export const junctionPropsSchema = z.object({
 export const surgeTankPropsSchema = z.object({
   id: z.string(),
   nodeNumber: z.number().int(),
-  topElevation: z.number(),
-  bottomElevation: z.number(),
+  tankTop: z.number(),
+  tankBottom: z.number(),
   diameter: z.number(),
   celerity: z.number(),
   friction: z.number(),

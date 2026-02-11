@@ -1,0 +1,986 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "reservoir",
+      "position": {
+        "x": 50,
+        "y": 200
+      },
+      "data": {
+        "label": "HW",
+        "type": "reservoir",
+        "nodeNumber": 1,
+        "elevation": 4022.31,
+        "reservoirElevation": 4130.58
+      },
+      "measured": {
+        "width": 50,
+        "height": 50
+      },
+      "selected": false
+    },
+    {
+      "id": "2",
+      "type": "junction",
+      "position": {
+        "x": 200,
+        "y": 200
+      },
+      "data": {
+        "label": "Node 2",
+        "type": "junction",
+        "nodeNumber": 2,
+        "elevation": 3947.44
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "100",
+      "type": "surgeTank",
+      "position": {
+        "x": 200,
+        "y": 100
+      },
+      "data": {
+        "label": "ST",
+        "type": "surgeTank",
+        "nodeNumber": 100,
+        "elevation": 3947.44,
+        "tankTop": 4215.88,
+        "tankBottom": 3918.96,
+        "diameter": 101.71,
+        "celerity": 2499.63,
+        "friction": 0.0057
+      },
+      "measured": {
+        "width": 50,
+        "height": 50
+      },
+      "selected": false
+    },
+    {
+      "id": "3",
+      "type": "node",
+      "position": {
+        "x": 350,
+        "y": 200
+      },
+      "data": {
+        "label": "Node 3",
+        "type": "node",
+        "nodeNumber": 3,
+        "elevation": 3940.78
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "4",
+      "type": "node",
+      "position": {
+        "x": 450,
+        "y": 200
+      },
+      "data": {
+        "label": "Node 4",
+        "type": "node",
+        "nodeNumber": 4,
+        "elevation": 3891.57
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "5",
+      "type": "node",
+      "position": {
+        "x": 550,
+        "y": 200
+      },
+      "data": {
+        "label": "Node 5",
+        "type": "node",
+        "nodeNumber": 5,
+        "elevation": 3486.88
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "6",
+      "type": "junction",
+      "position": {
+        "x": 650,
+        "y": 200
+      },
+      "data": {
+        "label": "Node 6",
+        "type": "junction",
+        "nodeNumber": 6,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "7",
+      "type": "node",
+      "position": {
+        "x": 750,
+        "y": 150
+      },
+      "data": {
+        "label": "Node 7",
+        "type": "node",
+        "nodeNumber": 7,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "51",
+      "type": "flowBoundary",
+      "position": {
+        "x": 850,
+        "y": 140
+      },
+      "data": {
+        "label": "FB1",
+        "type": "flowBoundary",
+        "nodeNumber": 51,
+        "elevation": 3437.66,
+        "scheduleNumber": 1,
+        "schedulePoints": [
+          {
+            "time": 0,
+            "flow": 3000
+          },
+          {
+            "time": 20,
+            "flow": 0
+          },
+          {
+            "time": 3000,
+            "flow": 0
+          }
+        ]
+      },
+      "measured": {
+        "width": 89,
+        "height": 49
+      },
+      "selected": false
+    },
+    {
+      "id": "8",
+      "type": "node",
+      "position": {
+        "x": 750,
+        "y": 250
+      },
+      "data": {
+        "label": "Node 8",
+        "type": "node",
+        "nodeNumber": 8,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "52",
+      "type": "flowBoundary",
+      "position": {
+        "x": 850,
+        "y": 240
+      },
+      "data": {
+        "label": "FB2",
+        "type": "flowBoundary",
+        "nodeNumber": 52,
+        "elevation": 3437.66,
+        "scheduleNumber": 2,
+        "schedulePoints": [
+          {
+            "time": 0,
+            "flow": 3000
+          },
+          {
+            "time": 20,
+            "flow": 0
+          },
+          {
+            "time": 3000,
+            "flow": 0
+          }
+        ]
+      },
+      "measured": {
+        "width": 89,
+        "height": 49
+      },
+      "selected": false
+    },
+    {
+      "id": "21",
+      "type": "node",
+      "position": {
+        "x": 350,
+        "y": 300
+      },
+      "data": {
+        "label": "Node 21",
+        "type": "node",
+        "nodeNumber": 21,
+        "elevation": 3940.78
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "22",
+      "type": "node",
+      "position": {
+        "x": 450,
+        "y": 300
+      },
+      "data": {
+        "label": "Node 22",
+        "type": "node",
+        "nodeNumber": 22,
+        "elevation": 3891.57
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "23",
+      "type": "node",
+      "position": {
+        "x": 550,
+        "y": 300
+      },
+      "data": {
+        "label": "Node 23",
+        "type": "node",
+        "nodeNumber": 23,
+        "elevation": 3486.88
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "24",
+      "type": "junction",
+      "position": {
+        "x": 650,
+        "y": 300
+      },
+      "data": {
+        "label": "Node 24",
+        "type": "junction",
+        "nodeNumber": 24,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "25",
+      "type": "node",
+      "position": {
+        "x": 750,
+        "y": 350
+      },
+      "data": {
+        "label": "Node 25",
+        "type": "node",
+        "nodeNumber": 25,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "53",
+      "type": "flowBoundary",
+      "position": {
+        "x": 850,
+        "y": 340
+      },
+      "data": {
+        "label": "FB3",
+        "type": "flowBoundary",
+        "nodeNumber": 53,
+        "elevation": 3437.66,
+        "scheduleNumber": 3,
+        "schedulePoints": [
+          {
+            "time": 0,
+            "flow": 3000
+          },
+          {
+            "time": 20,
+            "flow": 0
+          },
+          {
+            "time": 3000,
+            "flow": 0
+          }
+        ]
+      },
+      "measured": {
+        "width": 89,
+        "height": 49
+      },
+      "selected": false
+    },
+    {
+      "id": "26",
+      "type": "node",
+      "position": {
+        "x": 750,
+        "y": 450
+      },
+      "data": {
+        "label": "Node 26",
+        "type": "node",
+        "nodeNumber": 26,
+        "elevation": 3437.66
+      },
+      "measured": {
+        "width": 24,
+        "height": 24
+      },
+      "selected": false
+    },
+    {
+      "id": "54",
+      "type": "flowBoundary",
+      "position": {
+        "x": 850,
+        "y": 440
+      },
+      "data": {
+        "label": "FB4",
+        "type": "flowBoundary",
+        "nodeNumber": 54,
+        "elevation": 3437.66,
+        "scheduleNumber": 4,
+        "schedulePoints": [
+          {
+            "time": 0,
+            "flow": 3000
+          },
+          {
+            "time": 20,
+            "flow": 0
+          },
+          {
+            "time": 3000,
+            "flow": 0
+          }
+        ]
+      },
+      "measured": {
+        "width": 89,
+        "height": 49
+      },
+      "selected": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "s-right",
+      "target": "2",
+      "targetHandle": "t-left",
+      "id": "edge-c1-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C1",
+        "type": "conduit",
+        "length": 13405.51,
+        "diameter": 34.45,
+        "celerity": 2852.51,
+        "friction": 0.008,
+        "cplus": 0.1,
+        "cminus": 0.1,
+        "numSegments": 5
+      }
+    },
+    {
+      "source": "2",
+      "sourceHandle": "s-top",
+      "target": "100",
+      "targetHandle": "t-bottom",
+      "id": "edge-d1-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "D1",
+        "type": "dummy",
+        "length": 0,
+        "diameter": 19.36,
+        "celerity": 0,
+        "friction": 0,
+        "cplus": 2.367,
+        "cminus": 2.041,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "2",
+      "sourceHandle": "s-right",
+      "target": "3",
+      "targetHandle": "t-left",
+      "id": "edge-d2-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "D2",
+        "type": "dummy",
+        "length": 0,
+        "diameter": 27.3,
+        "celerity": 0,
+        "friction": 0,
+        "cplus": 2.367,
+        "cminus": 2.041,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "3",
+      "sourceHandle": "s-right",
+      "target": "4",
+      "targetHandle": "t-left",
+      "id": "edge-c2-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C2",
+        "type": "conduit",
+        "length": 1018.57,
+        "diameter": 23.79,
+        "celerity": 2207.66,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 3
+      }
+    },
+    {
+      "source": "4",
+      "sourceHandle": "s-right",
+      "target": "5",
+      "targetHandle": "t-left",
+      "id": "edge-c3-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C3",
+        "type": "conduit",
+        "length": 404.69,
+        "diameter": 23.79,
+        "celerity": 2622.79,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "5",
+      "sourceHandle": "s-right",
+      "target": "6",
+      "targetHandle": "t-left",
+      "id": "edge-c4-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C4",
+        "type": "conduit",
+        "length": 335.79,
+        "diameter": 23.79,
+        "celerity": 2838.77,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "6",
+      "sourceHandle": "s-top",
+      "target": "7",
+      "targetHandle": "t-left",
+      "id": "edge-c5-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C5",
+        "type": "conduit",
+        "length": 47.57,
+        "diameter": 20.92,
+        "celerity": 2954.81,
+        "friction": 0.0043,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "7",
+      "sourceHandle": "s-right",
+      "target": "51",
+      "targetHandle": "t-left",
+      "id": "edge-c6-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C6",
+        "type": "conduit",
+        "length": 176.71,
+        "diameter": 18.04,
+        "celerity": 2846.39,
+        "friction": 0.0045,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "6",
+      "sourceHandle": "s-bottom",
+      "target": "8",
+      "targetHandle": "t-left",
+      "id": "edge-c7-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C7",
+        "type": "conduit",
+        "length": 47.57,
+        "diameter": 20.92,
+        "celerity": 2954.81,
+        "friction": 0.0043,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "8",
+      "sourceHandle": "s-right",
+      "target": "52",
+      "targetHandle": "t-left",
+      "id": "edge-c8-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C8",
+        "type": "conduit",
+        "length": 206.53,
+        "diameter": 18.04,
+        "celerity": 2846.39,
+        "friction": 0.0045,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "2",
+      "sourceHandle": "s-bottom",
+      "target": "21",
+      "targetHandle": "t-left",
+      "id": "edge-d3-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "D3",
+        "type": "dummy",
+        "length": 0,
+        "diameter": 27.3,
+        "celerity": 0,
+        "friction": 0,
+        "cplus": 2.367,
+        "cminus": 2.041,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "21",
+      "sourceHandle": "s-right",
+      "target": "22",
+      "targetHandle": "t-left",
+      "id": "edge-c9-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C9",
+        "type": "conduit",
+        "length": 1018.57,
+        "diameter": 23.79,
+        "celerity": 2207.66,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 3
+      }
+    },
+    {
+      "source": "22",
+      "sourceHandle": "s-right",
+      "target": "23",
+      "targetHandle": "t-left",
+      "id": "edge-c10-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C10",
+        "type": "conduit",
+        "length": 404.69,
+        "diameter": 23.79,
+        "celerity": 2622.79,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "23",
+      "sourceHandle": "s-right",
+      "target": "24",
+      "targetHandle": "t-left",
+      "id": "edge-c11-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C11",
+        "type": "conduit",
+        "length": 335.79,
+        "diameter": 23.79,
+        "celerity": 2838.77,
+        "friction": 0.0041,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "24",
+      "sourceHandle": "s-top",
+      "target": "25",
+      "targetHandle": "t-left",
+      "id": "edge-c12-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C12",
+        "type": "conduit",
+        "length": 45.77,
+        "diameter": 20.92,
+        "celerity": 2954.81,
+        "friction": 0.0043,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "25",
+      "sourceHandle": "s-right",
+      "target": "53",
+      "targetHandle": "t-left",
+      "id": "edge-c13-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C13",
+        "type": "conduit",
+        "length": 206.53,
+        "diameter": 18.04,
+        "celerity": 2846.39,
+        "friction": 0.0045,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "24",
+      "sourceHandle": "s-bottom",
+      "target": "26",
+      "targetHandle": "t-left",
+      "id": "edge-c14-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C14",
+        "type": "conduit",
+        "length": 57.57,
+        "diameter": 20.92,
+        "celerity": 2954.81,
+        "friction": 0.0043,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    },
+    {
+      "source": "26",
+      "sourceHandle": "s-right",
+      "target": "54",
+      "targetHandle": "t-left",
+      "id": "edge-c15-1",
+      "type": "connection",
+      "style": {
+        "stroke": "#3498db",
+        "strokeWidth": 3
+      },
+      "markerEnd": {
+        "type": "arrowclosed",
+        "color": "#3498db"
+      },
+      "data": {
+        "label": "C15",
+        "type": "conduit",
+        "length": 176.71,
+        "diameter": 18.04,
+        "celerity": 2846.39,
+        "friction": 0.0045,
+        "cplus": 0,
+        "cminus": 0,
+        "numSegments": 1
+      }
+    }
+  ],
+  "computationalParams": {
+    "dtcomp": 0.01,
+    "dtout": 0.1,
+    "tmax": 500
+  },
+  "outputRequests": [
+    {
+      "elementId": "2",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "Q",
+        "HEAD"
+      ],
+      "id": "req-1770703469362"
+    },
+    {
+      "elementId": "100",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "Q",
+        "ELEV"
+      ],
+      "id": "req-1770703479968"
+    },
+    {
+      "elementId": "51",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "PRESSURE",
+        "HEAD"
+      ],
+      "id": "req-1770703489716"
+    },
+    {
+      "elementId": "52",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "PRESSURE",
+        "HEAD"
+      ],
+      "id": "req-1770703499823"
+    },
+    {
+      "elementId": "53",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "PRESSURE",
+        "HEAD"
+      ],
+      "id": "req-1770703509412"
+    },
+    {
+      "elementId": "54",
+      "elementType": "node",
+      "requestType": "HISTORY",
+      "variables": [
+        "PRESSURE",
+        "HEAD"
+      ],
+      "id": "req-1770703519156"
+    }
+  ]
+}

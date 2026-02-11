@@ -232,8 +232,8 @@ export function generateInpFile(nodes: WhamoNode[], edges: WhamoEdge[], autoDown
     addComment(d.comment);
     addL('SURGETANK ');
     addL(` ID ${d.label} SIMPLE`);
-    addL(` ELTOP ${d.topElevation}`);
-    addL(` ELBOTTOM ${d.bottomElevation}`);
+    addL(` ELTOP ${d.tankTop}`);
+    addL(` ELBOTTOM ${d.tankBottom}`);
     addL(` DIAM ${d.diameter}`);
     addL(` CELERITY ${d.celerity}`);
     addL(` FRICTION ${d.friction}`);

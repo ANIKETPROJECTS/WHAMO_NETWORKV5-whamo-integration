@@ -214,21 +214,21 @@ export function PropertiesPanel() {
           {isNode && element.data?.type === 'surgeTank' && (
             <>
               <div className="grid gap-2">
-                <Label htmlFor="topElev">Top Elevation (m)</Label>
+                <Label htmlFor="tankTop">Top Elevation (m)</Label>
                 <Input 
-                  id="topElev" 
+                  id="tankTop" 
                   type="number" 
-                  value={element.data?.topElevation || 0} 
-                  onChange={(e) => handleChange('topElevation', e.target.value)} 
+                  value={element.data?.tankTop || 0} 
+                  onChange={(e) => handleChange('tankTop', e.target.value)} 
                 />
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="botElev">Bottom Elevation (m)</Label>
+                <Label htmlFor="tankBottom">Bottom Elevation (m)</Label>
                 <Input 
-                  id="botElev" 
+                  id="tankBottom" 
                   type="number" 
-                  value={element.data?.bottomElevation || 0} 
-                  onChange={(e) => handleChange('bottomElevation', e.target.value)} 
+                  value={element.data?.tankBottom || 0} 
+                  onChange={(e) => handleChange('tankBottom', e.target.value)} 
                 />
               </div>
               <div className="grid gap-2">
