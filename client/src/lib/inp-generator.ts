@@ -127,88 +127,15 @@ export function generateInpFile(nodes: WhamoNode[], edges: WhamoEdge[], autoDown
       return;
     }
 
-    // RULE 2: ALWAYS SKIP - Intermediate Nodes in Multi-Link Chains
-    // Skip if SAME element ID appears in both incoming and outgoing
+    // RULE 2: SKIP - Intermediate Nodes in SAME element chain
+    // Skip if EXACTLY one incoming and one outgoing, and they share the SAME element ID
     if (connections.incoming.length === 1 && connections.outgoing.length === 1 &&
         connections.incoming[0] === connections.outgoing[0]) {
       return;
     }
 
-    // RULE 3: SELECTIVE INCLUSION - Transition Nodes
-    if (connections.incoming.length > 0 && connections.outgoing.length > 0) {
-      const inElem = connections.incoming[0];
-      const outElem = connections.outgoing[0];
-
-      if (inElem !== outElem) {
-        // RULE 3B: SKIP - Specific Transition Patterns
-        
-        // Dynamic Terminal Transition Check: 
-        // Identify the last transition before a special element (FB, etc.)
-        // In the reference files, this is C8 -> C9 skip before FB1/FB2.
-        // We can generalize this: if outgoing leads directly to a terminal node
-        // and that element is the last one in a sequence.
-        
-        const isTerminalTransition = connections.outgoing.every(outE => {
-          const link = elementLinks.find(l => l.from === nodeId && l.id === outE);
-          if (!link) return false;
-          const nextNodeConnections = nodeConnections[link.to];
-          return nextNodeConnections && nextNodeConnections.outgoing.length === 0 && nodeIdsWithSpecialElements.has(link.to);
-        });
-
-        // The specific C8 -> C9 skip pattern
-        if (inElem.match(/^C\d+$/) && outElem.match(/^C\d+$/)) {
-          const inNum = parseInt(inElem.substring(1));
-          const outNum = parseInt(outElem.substring(1));
-          if (outNum === inNum + 1 && isTerminalTransition) {
-            return;
-          }
-        }
-
-        // Case 2: Parallel Branches
-        // Check if this node is the first node after a junction
-        const incomingEdges = edges.filter(e => {
-          const toNode = nodes.find(n => n.id === e.target);
-          return (toNode?.data.nodeNumber?.toString() || toNode?.id) === nodeId;
-        });
-
-        const isAfterJunction = incomingEdges.some(e => {
-          const fromNode = nodes.find(n => n.id === e.source);
-          const fromId = fromNode?.data.nodeNumber?.toString() || fromNode?.id;
-          return fromId && nodeIdsWithSpecialElements.has(fromId) && 
-                 nodeConnections[fromId]?.outgoing.length > 1;
-        });
-
-        if (isAfterJunction) {
-          // Find the branch sequence starting from this node
-          let currentId = nodeId;
-          let pattern = "";
-          const visitedInPattern = new Set<string>();
-          
-          while (currentId && !visitedInPattern.has(currentId)) {
-            visitedInPattern.add(currentId);
-            const currConns = nodeConnections[currentId];
-            if (!currConns || currConns.outgoing.length !== 1) break;
-            const elem = currConns.outgoing[0];
-            pattern += (pattern ? "->" : "") + elem;
-            
-            const link = elementLinks.find(l => l.from === currentId && l.id === elem);
-            if (!link) break;
-            currentId = link.to;
-          }
-
-          if (pattern) {
-            if (branchPatterns.has(pattern)) {
-              // SKIP - Duplicate parallel branch
-              return;
-            }
-            branchPatterns.add(pattern);
-          }
-        }
-
-        // If it passed all skip rules, include it
-        nodesToInclude.add(nodeId);
-      }
-    }
+    // Include all other nodes
+    nodesToInclude.add(nodeId);
   });
 
   addL('');
