@@ -99,3 +99,5 @@ export function generateSystemDiagramSVG(nodes: WhamoNode[], edges: WhamoEdge[])
   svgContent += `</svg>`;
   return svgContent;
 }
+
+export const generateSystemDiagram = generateSystemDiagramSVG;
