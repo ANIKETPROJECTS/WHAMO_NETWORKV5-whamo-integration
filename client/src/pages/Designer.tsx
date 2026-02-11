@@ -331,7 +331,7 @@ function DesignerInner() {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="bg-white shadow-md"
+                    className="bg-white shadow-md rounded-full px-4"
                     onClick={() => {
                       const svg = generateSystemDiagram(nodes, edges, { showLabels });
                       setDiagramSvg(svg);

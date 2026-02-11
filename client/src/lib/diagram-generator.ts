@@ -197,7 +197,7 @@ export function generateSystemDiagramSVG(nodes: WhamoNode[], edges: WhamoEdge[],
     }
   });
 
-  svgContent += \`</svg>\`;
+  svgContent += `</svg>`;
   return svgContent;
 }
 
