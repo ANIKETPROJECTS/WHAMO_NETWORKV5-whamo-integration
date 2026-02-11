@@ -38,6 +38,16 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import { 
+  Download, 
+  X, 
+  Maximize2, 
+  Minimize2, 
+  Tag, 
+  TagOff,
+  Info
+} from 'lucide-react';
+import html2canvas from 'html2canvas';
 
 const nodeTypes = {
   reservoir: ReservoirNode,
@@ -233,13 +243,34 @@ function DesignerInner() {
 
   const [showDiagram, setShowDiagram] = useState(false);
   const [diagramSvg, setDiagramSvg] = useState<string | null>(null);
+  const [isMaximized, setIsMaximized] = useState(false);
+  const [showLabels, setShowLabels] = useState(true);
 
   useEffect(() => {
     if (showDiagram) {
-      const svg = generateSystemDiagram(nodes, edges);
+      const svg = generateSystemDiagram(nodes, edges, { showLabels });
       setDiagramSvg(svg);
     }
-  }, [nodes, edges, showDiagram]);
+  }, [nodes, edges, showDiagram, showLabels]);
+
+  const downloadImage = async () => {
+    const element = document.getElementById('system-diagram-container');
+    if (!element) return;
+    
+    try {
+      const canvas = await html2canvas(element, {
+        backgroundColor: '#ffffff',
+        scale: 2,
+      });
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = `system_diagram_${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+    } catch (err) {
+      toast({ variant: "destructive", title: "Download Failed", description: "Could not generate image." });
+    }
+  };
 
   return (
     <div className="flex flex-col h-screen w-full overflow-hidden bg-background text-foreground">
@@ -262,7 +293,7 @@ function DesignerInner() {
       {/* Main Content Area */}
       <div className="flex-1 overflow-hidden relative">
         <ResizablePanelGroup direction="vertical">
-          <ResizablePanel defaultSize={75} minSize={30}>
+          <ResizablePanel defaultSize={75} minSize={isMaximized ? 0 : 30} className={cn(isMaximized && "hidden")}>
             <div className="flex h-full w-full overflow-hidden relative">
               {/* Canvas Area */}
               <div className="flex-1 relative h-full bg-slate-50 transition-all duration-300">
@@ -302,7 +333,7 @@ function DesignerInner() {
                     size="sm" 
                     className="bg-white shadow-md"
                     onClick={() => {
-                      const svg = generateSystemDiagram(nodes, edges);
+                      const svg = generateSystemDiagram(nodes, edges, { showLabels });
                       setDiagramSvg(svg);
                       setShowDiagram(true);
                     }}
@@ -329,25 +360,75 @@ function DesignerInner() {
           
           {showDiagram && (
             <>
-              <ResizableHandle withHandle />
-              <ResizablePanel defaultSize={25} minSize={10}>
-                <div className="h-full w-full bg-card border-t border-border overflow-auto p-4 flex flex-col">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">System Diagram Console</h3>
-                    <div className="flex gap-2">
-                      <Button variant="ghost" size="sm" onClick={() => {
-                        if (diagramSvg) {
-                          const diagramBlob = new Blob([diagramSvg], { type: 'text/html' });
-                          saveAs(diagramBlob, `system_diagram_${Date.now()}.html`);
-                        }
-                      }}>Export HTML</Button>
-                      <Button variant="ghost" size="sm" onClick={() => setShowDiagram(false)}>Close</Button>
+              <ResizableHandle withHandle className={cn(isMaximized && "hidden")} />
+              <ResizablePanel defaultSize={25} minSize={isMaximized ? 100 : 10} className={cn(isMaximized && "flex-1")}>
+                <div className="h-full w-full bg-background overflow-hidden flex flex-col relative">
+                  <div className="flex items-center justify-between p-3 border-b bg-card">
+                    <div className="flex items-center gap-2">
+                      <Info className="w-4 h-4 text-primary" />
+                      <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">System Diagram Console</h3>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <Button variant="ghost" size="icon" onClick={() => setShowLabels(!showLabels)} title={showLabels ? "Hide Labels" : "Show Labels"}>
+                        {showLabels ? <TagOff className="w-4 h-4" /> : <Tag className="w-4 h-4" />}
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => setIsMaximized(!isMaximized)} title={isMaximized ? "Restore" : "Maximize"}>
+                        {isMaximized ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={downloadImage} title="Download Image">
+                        <Download className="w-4 h-4" />
+                      </Button>
+                      <Button variant="ghost" size="icon" onClick={() => {setShowDiagram(false); setIsMaximized(false);}} title="Close">
+                        <X className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
-                  <div 
-                    className="flex-1 bg-white rounded-md border border-border flex items-center justify-center overflow-auto min-h-[200px]"
-                    dangerouslySetInnerHTML={{ __html: diagramSvg || '' }}
-                  />
+                  <div className="flex-1 flex overflow-hidden p-4 gap-4">
+                    <div 
+                      id="system-diagram-container"
+                      className="flex-1 bg-white rounded-lg flex items-center justify-center overflow-auto min-h-[200px] shadow-inner"
+                      dangerouslySetInnerHTML={{ __html: diagramSvg || '' }}
+                    />
+                    
+                    {/* Legend and Summary */}
+                    <div className="w-64 border rounded-lg bg-card p-4 flex flex-col gap-4 overflow-auto shadow-sm">
+                      <div>
+                        <h4 className="text-xs font-bold uppercase mb-3 text-muted-foreground">Legend</h4>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <div className="w-6 h-5 bg-[#3498db] border-2 border-[#2980b9] rounded" />
+                            <span className="text-xs font-medium">Reservoir (HW)</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="w-5 h-8 bg-[#f39c12] border-2 border-[#e67e22] rounded" />
+                            <span className="text-xs font-medium">Surge Tank (ST)</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="w-4 h-4 bg-[#e74c3c] border-2 border-[#c0392b] rounded-full" />
+                            <span className="text-xs font-medium">Junction</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="w-0 h-0 border-t-[8px] border-t-transparent border-b-[8px] border-b-transparent border-l-[14px] border-l-[#2ecc71]" />
+                            <span className="text-xs font-medium">Flow Boundary</span>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <div className="w-6 h-1 bg-[#3498db]" />
+                            <span className="text-xs font-medium">Conduit (Pipe)</span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-auto border-t pt-4">
+                        <h4 className="text-xs font-bold uppercase mb-2 text-muted-foreground">Network Summary</h4>
+                        <div className="grid grid-cols-2 gap-2 text-[10px]">
+                          <div className="text-muted-foreground">Nodes:</div>
+                          <div className="font-bold text-right">{nodes.length}</div>
+                          <div className="text-muted-foreground">Pipes:</div>
+                          <div className="font-bold text-right">{edges.length}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </ResizablePanel>
             </>
