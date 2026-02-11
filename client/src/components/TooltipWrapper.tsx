@@ -25,7 +25,7 @@ export function TooltipWrapper({
         </TooltipTrigger>
         <TooltipContent 
           side="right" 
-          className="p-3 bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl"
+          className="p-3 bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl z-[9999]"
         >
           <div className="text-xs space-y-1 min-w-[150px]">
             {content}
