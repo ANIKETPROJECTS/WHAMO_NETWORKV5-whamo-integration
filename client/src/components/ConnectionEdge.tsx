@@ -29,18 +29,18 @@ export const ConnectionEdge = memo(({
     targetPosition,
   });
 
-  const isDummy = type === 'dummy';
+  const isDummy = type === 'dummy' || data?.type === 'dummy';
   const strokeColor = isDummy ? "#94a3b8" : "#3b82f6";
-  const strokeDasharray = isDummy ? "5 5" : undefined;
+  const strokeDasharray = isDummy ? "8 8" : undefined;
 
   return (
     <>
       <BaseEdge 
         path={edgePath} 
-        markerEnd={markerEnd} 
+        markerEnd={isDummy ? undefined : markerEnd} 
         style={{
           ...style,
-          strokeWidth: isDummy ? 1.5 : 2.5,
+          strokeWidth: isDummy ? 2 : 2.5,
           stroke: strokeColor,
           strokeDasharray,
         }} 

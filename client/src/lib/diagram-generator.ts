@@ -103,7 +103,7 @@ export function generateSystemDiagramSVG(nodes: WhamoNode[], edges: WhamoEdge[],
     const y2 = p2.y;
 
     const isDummy = edge.data?.type === 'dummy';
-    const className = isDummy ? 'stroke="#95a5a6" stroke-width="2" stroke-dasharray="5,5"' : 'stroke="#3498db" stroke-width="3"';
+    const className = isDummy ? 'stroke="#94a3b8" stroke-width="2" stroke-dasharray="8,8"' : 'stroke="#3498db" stroke-width="3"';
     const marker = isDummy ? '' : 'marker-end="url(#arrowhead)"';
 
     // Prepare tooltip data
