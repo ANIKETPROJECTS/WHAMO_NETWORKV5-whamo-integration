@@ -234,9 +234,16 @@ function DesignerInner() {
     e.target.value = '';
   };
 
-  const handleGenerateInp = () => {
+  const handleGenerateInp = async () => {
     try {
-      generateInpFile(nodes, edges);
+      const inpContent = generateInpFile(nodes, edges);
+      
+      // Also send to backend to store for WHAMO
+      await fetch('/api/save-inp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: inpContent })
+      });
       
       // Generate system diagram as well
       const diagramHtml = generateSystemDiagram(nodes, edges);

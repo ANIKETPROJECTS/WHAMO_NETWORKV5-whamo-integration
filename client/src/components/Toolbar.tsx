@@ -82,6 +82,26 @@ export function Toolbar({ onExport, onSave, onLoad }: { onExport: () => void, on
     { label: 'Flow BC', icon: ArrowRightCircle, action: () => addNode('flowBoundary', { x: 50, y: 150 }), color: 'text-green-600' },
   ];
 
+  const handleRunWhamo = async () => {
+    try {
+      const response = await fetch("/api/run-whamo", { method: "POST" });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "WHAMO simulation failed.");
+      }
+
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "network.out";
+      link.click();
+    } catch (error: any) {
+      console.error("WHAMO Error:", error);
+      alert(error.message);
+    }
+  };
+
   return (
     <div className="h-16 border-b border-border bg-card px-4 flex items-center justify-between shadow-sm z-10 relative">
       <div className="flex items-center gap-2">
@@ -294,6 +314,11 @@ export function Toolbar({ onExport, onSave, onLoad }: { onExport: () => void, on
           <Button onClick={onExport} className="ml-2 shadow-lg shadow-primary/20">
             <Download className="w-4 h-4 mr-2" />
             Generate .INP
+          </Button>
+
+          <Button onClick={handleRunWhamo} variant="outline" className="ml-2 border-primary text-primary hover:bg-primary/10">
+            <Download className="w-4 h-4 mr-2" />
+            Generate .OUT
           </Button>
         </div>
       </div>
