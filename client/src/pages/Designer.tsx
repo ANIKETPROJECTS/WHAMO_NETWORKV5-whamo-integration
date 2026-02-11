@@ -244,7 +244,18 @@ function DesignerInner() {
   const [showDiagram, setShowDiagram] = useState(false);
   const [diagramSvg, setDiagramSvg] = useState<string | null>(null);
   const [isMaximized, setIsMaximized] = useState(false);
-  const [showLabels, setShowLabels] = useState(true);
+  const [showLabels, setShowLabels] = useState(false);
+  const [zoom, setZoom] = useState(1);
+
+  const handleWheel = (e: React.WheelEvent) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = -e.deltaY * 0.01;
+      setZoom(prev => Math.min(Math.max(prev + delta, 0.2), 5));
+    }
+  };
+
+  const resetZoom = () => setZoom(1);
 
   useEffect(() => {
     if (showDiagram) {
@@ -369,6 +380,9 @@ function DesignerInner() {
                       <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">System Diagram Console</h3>
                     </div>
                     <div className="flex items-center gap-1">
+                      <Button variant="ghost" size="icon" onClick={resetZoom} title="Reset Zoom">
+                        <Maximize2 className="w-4 h-4" />
+                      </Button>
                       <Button variant="ghost" size="icon" onClick={() => setShowLabels(!showLabels)} title={showLabels ? "Hide Labels" : "Show Labels"}>
                         {showLabels ? <EyeOff className="w-4 h-4" /> : <Tag className="w-4 h-4" />}
                       </Button>
@@ -378,19 +392,31 @@ function DesignerInner() {
                       <Button variant="ghost" size="icon" onClick={downloadImage} title="Download Image">
                         <Download className="w-4 h-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => {setShowDiagram(false); setIsMaximized(false);}} title="Close">
+                      <Button variant="ghost" size="icon" onClick={() => {setShowDiagram(false); setIsMaximized(false); setZoom(1);}} title="Close">
                         <X className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
-                  <div className="flex-1 flex overflow-hidden p-4 gap-4">
+                  <div 
+                    className="flex-1 flex overflow-hidden p-4 gap-4"
+                    onWheel={handleWheel}
+                  >
                     <div 
                       id="system-diagram-container"
-                      className="flex-1 bg-white rounded-lg flex items-center justify-center overflow-auto min-h-[200px] shadow-inner"
-                      dangerouslySetInnerHTML={{ __html: diagramSvg || '' }}
-                    />
+                      className="flex-1 bg-white rounded-lg flex items-center justify-center overflow-auto min-h-[200px] shadow-inner relative"
+                    >
+                      <div 
+                        style={{ 
+                          transform: `scale(${zoom})`, 
+                          transformOrigin: 'center center',
+                          transition: 'transform 0.1s ease-out'
+                        }}
+                        className="w-full h-full flex items-center justify-center"
+                        dangerouslySetInnerHTML={{ __html: diagramSvg || '' }}
+                      />
+                    </div>
                     
-                    {/* Legend and Summary */}
+                    {/* Legend */}
                     <div className="w-64 border rounded-lg bg-card p-4 flex flex-col gap-4 overflow-auto shadow-sm">
                       <div>
                         <h4 className="text-xs font-bold uppercase mb-3 text-muted-foreground">Legend</h4>
@@ -415,16 +441,6 @@ function DesignerInner() {
                             <div className="w-6 h-1 bg-[#3498db]" />
                             <span className="text-xs font-medium">Conduit (Pipe)</span>
                           </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-auto border-t pt-4">
-                        <h4 className="text-xs font-bold uppercase mb-2 text-muted-foreground">Network Summary</h4>
-                        <div className="grid grid-cols-2 gap-2 text-[10px]">
-                          <div className="text-muted-foreground">Nodes:</div>
-                          <div className="font-bold text-right">{nodes.length}</div>
-                          <div className="text-muted-foreground">Pipes:</div>
-                          <div className="font-bold text-right">{edges.length}</div>
                         </div>
                       </div>
                     </div>
