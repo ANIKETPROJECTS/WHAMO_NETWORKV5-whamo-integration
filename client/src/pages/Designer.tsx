@@ -423,7 +423,7 @@ function DesignerInner() {
                       maxScale={4}
                       centerOnInit
                     >
-                      {({ zoomIn, zoomOut, resetTransform }) => (
+                      {({ zoomIn, zoomOut, resetTransform }: { zoomIn: () => void, zoomOut: () => void, resetTransform: () => void }) => (
                         <div className="w-full h-full relative group">
                           <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Button size="icon" variant="secondary" className="w-8 h-8 rounded-full shadow-md" onClick={() => zoomIn()}>+</Button>
@@ -448,14 +448,6 @@ function DesignerInner() {
         </ResizablePanelGroup>
       </div>
     </div>
-  );
-}
-
-export default function Designer() {
-  return (
-    <ReactFlowProvider>
-      <DesignerInner />
-    </ReactFlowProvider>
   );
 }
 
