@@ -218,7 +218,7 @@ export function PropertiesPanel() {
                 <Input 
                   id="tankTop" 
                   type="number" 
-                  value={element.data?.tankTop || 0} 
+                  value={Number(element.data?.tankTop) || 0} 
                   onChange={(e) => handleChange('tankTop', e.target.value)} 
                 />
               </div>
@@ -227,7 +227,7 @@ export function PropertiesPanel() {
                 <Input 
                   id="tankBottom" 
                   type="number" 
-                  value={element.data?.tankBottom || 0} 
+                  value={Number(element.data?.tankBottom) || 0} 
                   onChange={(e) => handleChange('tankBottom', e.target.value)} 
                 />
               </div>
