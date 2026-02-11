@@ -44,7 +44,7 @@ import {
   Maximize2, 
   Minimize2, 
   Tag, 
-  TagOff,
+  EyeOff,
   Info
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
@@ -370,7 +370,7 @@ function DesignerInner() {
                     </div>
                     <div className="flex items-center gap-1">
                       <Button variant="ghost" size="icon" onClick={() => setShowLabels(!showLabels)} title={showLabels ? "Hide Labels" : "Show Labels"}>
-                        {showLabels ? <TagOff className="w-4 h-4" /> : <Tag className="w-4 h-4" />}
+                        {showLabels ? <EyeOff className="w-4 h-4" /> : <Tag className="w-4 h-4" />}
                       </Button>
                       <Button variant="ghost" size="icon" onClick={() => setIsMaximized(!isMaximized)} title={isMaximized ? "Restore" : "Maximize"}>
                         {isMaximized ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
