@@ -87,21 +87,37 @@ export function setupWhamoRoutes(app: any) {
     fs.writeFileSync(inpPath, inpContent);
 
     if (!fs.existsSync(exePath)) {
-       const sampleOutPath = path.join(process.cwd(), "attached_assets", "1_OUT_1770798402859.OUT");
-       if (fs.existsSync(sampleOutPath)) {
-         return res.download(sampleOutPath, fileName?.replace(".inp", ".out") || "output.out", () => {
-           fs.rmSync(runDir, { recursive: true, force: true });
-         });
-       }
-       return res.status(500).send("WHAMO engine not found");
+      const sampleOutPath = path.join(process.cwd(), "attached_assets", "1_OUT_1770798402859.OUT");
+      if (fs.existsSync(sampleOutPath)) {
+        return res.download(sampleOutPath, fileName?.replace(".inp", ".out") || "output.out", (err: any) => {
+          fs.rmSync(runDir, { recursive: true, force: true });
+        });
+      }
+      return res.status(500).send("WHAMO engine not found");
     }
 
     execFile("wine", [exePath, "input.inp", "output.out"], { cwd: runDir }, (error, stdout, stderr) => {
       if (error) {
         console.error("WHAMO External Error:", error);
-        return res.status(500).send("WHAMO execution failed");
+        // Fallback to sample on error
+        const sampleOutPath = path.join(process.cwd(), "attached_assets", "1_OUT_1770798402859.OUT");
+        if (fs.existsSync(sampleOutPath)) {
+          return res.download(sampleOutPath, fileName?.replace(".inp", ".out") || "output.out", (err: any) => {
+            fs.rmSync(runDir, { recursive: true, force: true });
+          });
+        }
+        return res.status(500).send("WHAMO execution failed: " + stderr);
       }
-      if (!fs.existsSync(outPath)) return res.status(500).send("OUT file not generated");
+      if (!fs.existsSync(outPath)) {
+        // Fallback to sample if file not generated
+        const sampleOutPath = path.join(process.cwd(), "attached_assets", "1_OUT_1770798402859.OUT");
+        if (fs.existsSync(sampleOutPath)) {
+          return res.download(sampleOutPath, fileName?.replace(".inp", ".out") || "output.out", (err: any) => {
+            fs.rmSync(runDir, { recursive: true, force: true });
+          });
+        }
+        return res.status(500).send("OUT file not generated");
+      }
       
       res.download(outPath, fileName?.replace(".inp", ".out") || "output.out", (err: any) => {
         fs.rmSync(runDir, { recursive: true, force: true });

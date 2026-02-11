@@ -184,38 +184,6 @@ export function Header({ onExport, onGenerateOut, isGeneratingOut, onSave, onLoa
                   <DownloadCloud className="w-4 h-4" /> Download (.inp)
                 </MenubarItem>
                 <MenubarSeparator />
-                <MenubarItem onClick={() => {
-                  const input = document.createElement('input');
-                  input.type = 'file';
-                  input.accept = '.inp';
-                  input.onchange = async (e) => {
-                    const file = (e.target as HTMLInputElement).files?.[0];
-                    if (!file) return;
-                    const content = await file.text();
-                    try {
-                      const response = await fetch("/api/run-external-whamo", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ inpContent: content, fileName: file.name })
-                      });
-                      if (!response.ok) throw new Error("Failed to generate .OUT file");
-                      const blob = await response.blob();
-                      const url = window.URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = file.name.replace('.inp', '.out');
-                      document.body.appendChild(a);
-                      a.click();
-                      window.URL.revokeObjectURL(url);
-                    } catch (err) {
-                      toast({ title: "Error", description: "Failed to generate .OUT file from external .INP", variant: "destructive" });
-                    }
-                  };
-                  input.click();
-                }} className="gap-2">
-                  <ExternalLink className="w-4 h-4" /> Generate external .out file
-                </MenubarItem>
-                <MenubarSeparator />
                 <MenubarItem onClick={() => { clearNetwork(); }} className="gap-2 text-destructive focus:text-destructive">
                   <Eraser className="w-4 h-4" /> Clear Canvas
                 </MenubarItem>
@@ -283,6 +251,37 @@ export function Header({ onExport, onGenerateOut, isGeneratingOut, onSave, onLoa
               <MenubarContent>
                 <MenubarItem onClick={onShowDiagram} className="gap-2">
                   <Layout className="w-4 h-4" /> System Diagram Console
+                </MenubarItem>
+                <MenubarItem onClick={() => {
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.accept = '.inp';
+                  input.onchange = async (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    if (!file) return;
+                    const content = await file.text();
+                    try {
+                      const response = await fetch("/api/run-external-whamo", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ inpContent: content, fileName: file.name })
+                      });
+                      if (!response.ok) throw new Error("Failed to generate .OUT file");
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = file.name.replace('.inp', '.out');
+                      document.body.appendChild(a);
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      toast({ title: "Error", description: "Failed to generate .OUT file from external .INP", variant: "destructive" });
+                    }
+                  };
+                  input.click();
+                }} className="gap-2">
+                  <ExternalLink className="w-4 h-4" /> Generate external .out file
                 </MenubarItem>
                 <MenubarSeparator />
                 <Dialog>
