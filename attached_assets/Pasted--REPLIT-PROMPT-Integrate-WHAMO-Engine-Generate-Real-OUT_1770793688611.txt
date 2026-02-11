@@ -1,0 +1,125 @@
+🧠 REPLIT PROMPT — Integrate WHAMO Engine & Generate Real .OUT File
+
+Project Type: Web-based Hydraulic / Surge Network Modeling Software
+Instruction: Extend existing system. Do NOT change database schema or current INP generation logic.
+
+🎯 OBJECTIVE
+
+Add a “Generate .OUT” button beside the existing “Generate .INP” button that:
+
+Takes the current network model
+
+Uses the already generated .INP file
+
+Runs the WHAMO hydraulic engine in the background
+
+Produces a real WHAMO .OUT file (not dummy data)
+
+Automatically downloads the .OUT file to the user
+
+The output must match the structure of the provided sample .OUT file.
+
+🖥️ FRONTEND CHANGES
+Add New Button
+
+Place to the right side of the "Generate .INP" button:
+
+<button id="generateOutBtn" class="btn btn-primary">
+  Generate .OUT
+</button>
+
+Button Behavior
+document.getElementById("generateOutBtn").addEventListener("click", async () => {
+  const response = await fetch("/api/run-whamo", { method: "POST" });
+
+  if (!response.ok) {
+    alert("WHAMO simulation failed.");
+    return;
+  }
+
+  const blob = await response.blob();
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "network.out";
+  link.click();
+});
+
+⚙️ BACKEND IMPLEMENTATION
+1️⃣ Store WHAMO Engine
+
+Place executable here:
+
+/server/engine/whamo.exe
+
+2️⃣ API Route to Run WHAMO
+const { execFile } = require("child_process");
+const path = require("path");
+const fs = require("fs");
+
+app.post("/api/run-whamo", (req, res) => {
+  const inpPath = path.join(__dirname, "../temp/network.inp");
+  const outPath = path.join(__dirname, "../temp/network.out");
+  const exePath = path.join(__dirname, "../engine/whamo.exe");
+
+  // Ensure INP exists
+  if (!fs.existsSync(inpPath)) {
+    return res.status(400).send("INP file not found.");
+  }
+
+  // Remove old OUT file
+  if (fs.existsSync(outPath)) fs.unlinkSync(outPath);
+
+  execFile(exePath, [inpPath, outPath], (error, stdout, stderr) => {
+    if (error) {
+      console.error("WHAMO Error:", error);
+      console.error(stderr);
+      return res.status(500).send("WHAMO execution failed.");
+    }
+
+    if (!fs.existsSync(outPath)) {
+      return res.status(500).send("OUT file not generated.");
+    }
+
+    res.download(outPath, "network.out");
+  });
+});
+
+🧠 HOW IT WORKS
+Step	Action
+1	User clicks Generate .OUT
+2	Backend locates current .INP file
+3	WHAMO engine runs silently
+4	WHAMO produces .OUT file
+5	System sends real .OUT to user
+⚠️ IMPORTANT FOR REPLIT ENVIRONMENT
+
+Replit runs on Linux servers. Windows .exe files do not run directly.
+
+Solution: Use Wine
+
+Install Wine in Replit:
+
+apt-get update
+apt-get install wine -y
+
+
+Modify execution command:
+
+execFile("wine", [exePath, inpPath, outPath], callback);
+
+🚫 REMOVE OLD BUG
+
+Delete any existing code that does:
+
+fs.writeFileSync("file.out", someVariable);
+
+
+This is causing the "undefined" OUT file problem.
+
+✅ FINAL RESULT
+
+✔ Real WHAMO engine runs
+✔ Proper hydraulic simulation happens
+✔ Valid .OUT file generated
+✔ Automatic download works
+✔ No more “undefined” file content
