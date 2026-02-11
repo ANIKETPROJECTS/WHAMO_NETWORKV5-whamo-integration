@@ -5,6 +5,7 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
 } from '@xyflow/react';
+import { TooltipWrapper, DataList } from './TooltipWrapper';
 
 export const ConnectionEdge = memo(({
   id,
@@ -17,6 +18,7 @@ export const ConnectionEdge = memo(({
   style = {},
   markerEnd,
   data,
+  type,
 }: EdgeProps) => {
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
@@ -27,6 +29,10 @@ export const ConnectionEdge = memo(({
     targetPosition,
   });
 
+  const isDummy = type === 'dummy';
+  const strokeColor = isDummy ? "#94a3b8" : "#3b82f6";
+  const strokeDasharray = isDummy ? "5 5" : undefined;
+
   return (
     <>
       <BaseEdge 
@@ -34,8 +40,9 @@ export const ConnectionEdge = memo(({
         markerEnd={markerEnd} 
         style={{
           ...style,
-          strokeWidth: 2,
-          stroke: "#64748b",
+          strokeWidth: isDummy ? 1.5 : 2.5,
+          stroke: strokeColor,
+          strokeDasharray,
         }} 
       />
       <EdgeLabelRenderer>
@@ -43,17 +50,17 @@ export const ConnectionEdge = memo(({
           style={{
             position: 'absolute',
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            background: 'white',
-            padding: '2px 4px',
-            borderRadius: '4px',
-            fontSize: '10px',
-            fontWeight: 700,
             pointerEvents: 'all',
-            border: '1px solid #cbd5e1',
           }}
           className="nodrag nopan"
         >
-          {(data?.label as ReactNode) || ''}
+          <TooltipWrapper 
+            content={<DataList data={data} title={isDummy ? "Dummy Pipe Properties" : "Conduit Properties"} />}
+          >
+            <div className="bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded border border-slate-200 shadow-sm text-[9px] font-bold cursor-help hover:bg-white transition-colors">
+              {(data?.label as ReactNode) || id}
+            </div>
+          </TooltipWrapper>
         </div>
       </EdgeLabelRenderer>
     </>
