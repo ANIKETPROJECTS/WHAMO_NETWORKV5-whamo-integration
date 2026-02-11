@@ -1,7 +1,7 @@
 import { WhamoNode, WhamoEdge, useNetworkStore } from './store';
 import { saveAs } from 'file-saver';
 
-export function generateInpFile(nodes: WhamoNode[], edges: WhamoEdge[]) {
+export function generateInpFile(nodes: WhamoNode[], edges: WhamoEdge[], autoDownload: boolean = true) {
   const state = useNetworkStore.getState();
   const lines: string[] = [];
 
@@ -395,7 +395,9 @@ export function generateInpFile(nodes: WhamoNode[], edges: WhamoEdge[]) {
   addL('GO');
   addL('GOODBYE');
 
-  const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
-  saveAs(blob, `network.inp`);
+  if (autoDownload) {
+    const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, `network.inp`);
+  }
   return lines.join('\n');
 }

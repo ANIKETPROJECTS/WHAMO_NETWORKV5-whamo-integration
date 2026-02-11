@@ -25,7 +25,8 @@ import {
   ArrowRightCircle,
   ListVideo,
   Layout,
-  Info
+  Info,
+  ExternalLink
 } from 'lucide-react';
 import {
   Menubar,
@@ -118,6 +119,36 @@ export function Header({ onExport, onGenerateOut, isGeneratingOut, onSave, onLoa
 
   const availableVars = ["Q", "HEAD", "ELEV", "VEL", "PRESS", "PIEZHEAD"];
 
+  const handleGenerateOutDirectly = async () => {
+    try {
+      // 1. Generate INP content from current state
+      const { generateInpFile } = await import('@/lib/inp-generator');
+      const inpContent = generateInpFile(nodes, edges, false);
+      
+      // 2. Send to backend to run WHAMO
+      const response = await fetch("/api/run-whamo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inpContent })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "WHAMO simulation failed.");
+      }
+
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "network.out";
+      link.click();
+      toast({ title: "Success", description: ".OUT file generated and downloaded." });
+    } catch (error: any) {
+      console.error("WHAMO Error:", error);
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
+  };
+
   return (
     <div className="flex flex-col border-b bg-background">
       {/* Top Row: Icon and Project Name */}
@@ -151,6 +182,38 @@ export function Header({ onExport, onGenerateOut, isGeneratingOut, onSave, onLoa
                 </MenubarItem>
                 <MenubarItem onClick={onExport} className="gap-2">
                   <DownloadCloud className="w-4 h-4" /> Download (.inp)
+                </MenubarItem>
+                <MenubarSeparator />
+                <MenubarItem onClick={() => {
+                  const input = document.createElement('input');
+                  input.type = 'file';
+                  input.accept = '.inp';
+                  input.onchange = async (e) => {
+                    const file = (e.target as HTMLInputElement).files?.[0];
+                    if (!file) return;
+                    const content = await file.text();
+                    try {
+                      const response = await fetch("/api/run-external-whamo", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ inpContent: content, fileName: file.name })
+                      });
+                      if (!response.ok) throw new Error("Failed to generate .OUT file");
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = file.name.replace('.inp', '.out');
+                      document.body.appendChild(a);
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                    } catch (err) {
+                      toast({ title: "Error", description: "Failed to generate .OUT file from external .INP", variant: "destructive" });
+                    }
+                  };
+                  input.click();
+                }} className="gap-2">
+                  <ExternalLink className="w-4 h-4" /> Generate external .out file
                 </MenubarItem>
                 <MenubarSeparator />
                 <MenubarItem onClick={() => { clearNetwork(); }} className="gap-2 text-destructive focus:text-destructive">
@@ -390,7 +453,7 @@ export function Header({ onExport, onGenerateOut, isGeneratingOut, onSave, onLoa
           <Button 
             variant="outline" 
             size="sm" 
-            onClick={onGenerateOut}
+            onClick={handleGenerateOutDirectly}
             disabled={isGeneratingOut}
             className="h-9 px-6 rounded-full border-[#1a73e8] text-[#1a73e8] hover:bg-[#1a73e8]/10 font-medium shadow-sm transition-all"
             data-testid="button-generate-out"

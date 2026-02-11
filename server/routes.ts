@@ -14,10 +14,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const upload = multer({ dest: "uploads/" });
 
+import { setupWhamoRoutes } from "./whamo-handler";
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+  setupWhamoRoutes(app);
   // WHAMO Integration
   app.post("/api/generate-out", upload.single("inpFile"), async (req: Request, res: Response) => {
     const tempId = uuidv4();

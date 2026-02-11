@@ -84,7 +84,16 @@ export function Toolbar({ onExport, onSave, onLoad }: { onExport: () => void, on
 
   const handleRunWhamo = async () => {
     try {
-      const response = await fetch("/api/run-whamo", { method: "POST" });
+      // 1. Generate INP content from current state
+      const { generateInpFile } = await import('@/lib/inp-generator');
+      const inpContent = generateInpFile(nodes, edges, false);
+
+      // 2. Send to backend
+      const response = await fetch("/api/run-whamo", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ inpContent })
+      });
 
       if (!response.ok) {
         const errorText = await response.text();
