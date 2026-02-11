@@ -37,7 +37,7 @@ export const ConnectionEdge = memo(({
     <>
       <BaseEdge 
         path={edgePath} 
-        markerEnd={isDummy ? undefined : markerEnd} 
+        markerEnd={markerEnd} 
         style={{
           ...style,
           strokeWidth: isDummy ? 2 : 2.5,

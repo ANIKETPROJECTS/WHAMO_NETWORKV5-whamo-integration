@@ -147,10 +147,10 @@ export const useNetworkStore = create<NetworkState>((set, get) => ({
           ...connection,
           id,
           type: 'connection',
-          style: { stroke: '#64748b', strokeWidth: 2 },
+          style: { stroke: '#3b82f6', strokeWidth: 2 },
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: '#64748b',
+            color: '#3b82f6',
           },
           data: { 
             label: connectionLabel, 
