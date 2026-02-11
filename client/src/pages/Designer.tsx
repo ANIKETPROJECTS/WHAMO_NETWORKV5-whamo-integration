@@ -384,13 +384,12 @@ function DesignerInner() {
                     </div>
                   </div>
                   <div className="flex-1 flex overflow-hidden p-4 gap-4">
-                    <div 
+                    <div className="flex-1 bg-white rounded-lg flex items-center justify-center overflow-auto min-h-[200px] shadow-inner"
                       id="system-diagram-container"
-                      className="flex-1 bg-white rounded-lg flex items-center justify-center overflow-auto min-h-[200px] shadow-inner"
                       dangerouslySetInnerHTML={{ __html: diagramSvg || '' }}
                     />
                     
-                    {/* Legend and Summary */}
+                    {/* Legend */}
                     <div className="w-64 border rounded-lg bg-card p-4 flex flex-col gap-4 overflow-auto shadow-sm">
                       <div>
                         <h4 className="text-xs font-bold uppercase mb-3 text-muted-foreground">Legend</h4>
@@ -415,16 +414,6 @@ function DesignerInner() {
                             <div className="w-6 h-1 bg-[#3498db]" />
                             <span className="text-xs font-medium">Conduit (Pipe)</span>
                           </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-auto border-t pt-4">
-                        <h4 className="text-xs font-bold uppercase mb-2 text-muted-foreground">Network Summary</h4>
-                        <div className="grid grid-cols-2 gap-2 text-[10px]">
-                          <div className="text-muted-foreground">Nodes:</div>
-                          <div className="font-bold text-right">{nodes.length}</div>
-                          <div className="text-muted-foreground">Pipes:</div>
-                          <div className="font-bold text-right">{edges.length}</div>
                         </div>
                       </div>
                     </div>
